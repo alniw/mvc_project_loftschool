@@ -25,7 +25,7 @@ $user = $this->user;
             email: <input type="text" id="user_email_<?=$user->getId();?>" value="<?=htmlspecialchars($user->email);?>">
             password: <input type="text" id="user_password_<?=$user->getId();?>">
             <br>
-            <input type="button" onclick="saveUser(<?=$user->getId();?>);" value="Сохранить">
+            <input type="button" onclick="updateUser(<?=$user->getId();?>);" value="Сохранить">
             <input type="button" onclick="deleteUser(<?=$user->getId();?>);" value="Удалить">
 
             <div id="resp_<?=$user->getId();?>">
@@ -37,10 +37,10 @@ $user = $this->user;
 <?php endif; ?>
 
 <script>
-    function saveUser(userId)
+    function updateUser(userId)
     {
         $.post(
-            '/index.php/admin/saveUser',
+            '/index.php/admin/updateUser',
             {
                 id: userId,
                 name: $('#user_name_' + userId).val(),

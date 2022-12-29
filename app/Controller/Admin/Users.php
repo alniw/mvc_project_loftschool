@@ -16,7 +16,7 @@ class Users extends Admin
         );
     }
 
-    public function saveUser()
+    public function updateUser()
     {
         $id = (int) $_POST['id'];
         $name = (string) $_POST['name'];
@@ -24,16 +24,20 @@ class Users extends Admin
         $password = (string) $_POST['password'];
 
         $user = User::getById($id);
-        if (!$name || !$password) {
-            return $this->response(['error' => 'Введите имя и пароль']);
+        if (!$user) {
+            return $this->response(['error' => 'Пользователь не найден']);
+        }
+
+        if (!$name) {
+            return $this->response(['error' => 'Имя не задано']);
         }
 
         if (!$email) {
-            return $this->response(['error' => 'Введите email']);
+            return $this->response(['error' => 'email не задан']);
         }
 
-        if (mb_strlen($password) < 5) {
-            return 'Длина пароля должна быть не менее 5 символов';
+        if ($password && mb_strlen($password) < 5) {
+            return $this->response(['error' => 'Длина пароля должна быть не менее 5 символов']);
         }
 
         $user->name = $name;
@@ -72,15 +76,25 @@ class Users extends Admin
         $password = (string) $_POST['password'];
 
         if (!$name || !$password) {
-            return 'Введите имя и пароль';
+            return 'Не заданы имя и пароль';
+        }
+
+        if (!$name) {
+            return $this->response(['error' => 'Введите имя']);
         }
 
         if (!$email) {
-            return 'Введите email';
+            return $this->response(['error' => 'Введите email']);
         }
 
-        if (mb_strlen($password) < 5) {
-            return 'Длина пароля должна быть не менее 5 символов';
+        if (!$password || mb_strlen($password) < 5) {
+            return $this->response(['error' => 'Длина пароля должна быть не менее 5 символов']);
+        }
+
+        /** @var User $emailUser */
+        $emailUser = User::getByEmail($email);
+        if ($emailUser) {
+            return $this->response(['error' => 'email занят пользователем  с id#' . $emailUser->id]);
         }
 
         $userData = [
@@ -92,7 +106,7 @@ class Users extends Admin
         $user = new User($userData);
         $user->save();
 
-        return $this->response(['result' => 'ok']);
+        return $this->response(['result' => 'Пользователь успешно добавлен']);
     }
 
     public function response(array $data)
