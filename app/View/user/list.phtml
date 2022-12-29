@@ -1,5 +1,5 @@
 <?php
-/** @var \App\Model\User[] $user */
+/** @var \App\Model\Eloquent\User[] $user */
 $users = $this->users;
 ?>
 
@@ -13,7 +13,7 @@ $users = $this->users;
         Пользователь ID: <?=$user->getId();?> с именем <?=$user->getName();?><br>
     <? endforeach; ?>
 <? else:?>
-    Пользоватей нет
+    Пользователи отсутствуют
 <? endif; ?>
 
 </body>

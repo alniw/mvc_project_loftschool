@@ -5,13 +5,22 @@
     .text { padding-left: 15px; padding-top: 15px; }
     .date {color: grey; font-size: 11px;}
     .admin a { color: #46468b; float: right; padding-right: 15px; }
+    .logout a { color: #aa4542; float: right; padding-right: 650px; }
 </style>
 
 <?php
-/** @var $message \App\Model\Message */
-/** @var $user \App\Model\User */
+/** @var $message \App\Model\Eloquent\Message */
+/** @var $user \App\Model\Eloquent\User */
 $user = $this->user;
 ?>
+
+Привет, <?=$user->getName();?>
+<div class="logout">
+    <a href="/index.php/logout">Выход</a>
+</div>
+
+<br><br>
+
 <?php if($messages = $this->messages): ?>
     <?php foreach ($messages as $message): ?>
         <div class="message">

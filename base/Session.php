@@ -9,6 +9,11 @@ class Session
         session_start();
     }
 
+    public function dropSession()
+    {
+        session_destroy();
+    }
+
     public function authUser(int $id)
     {
         $_SESSION['user_id'] = $id;

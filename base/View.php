@@ -40,6 +40,12 @@ class View
             $this->twig = new \Twig\Environment($loader);
         }
         return $this->twig->render($tpl, $data);
+    }
 
+    public function assign($data)
+    {
+        foreach ($data as $key => $value) {
+            $this->data[$key] = $value;
+        }
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
-use App\Model\Message;
+use App\Model\Eloquent\Message;
 use Base\AbstractController;
 
 class Admin extends AbstractController

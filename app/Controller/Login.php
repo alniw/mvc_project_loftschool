@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\User;
+use App\Model\Eloquent\User;
 use Base\AbstractController;
 
 class Login extends AbstractController
@@ -66,7 +66,7 @@ class Login extends AbstractController
         $userData = [
             'name' => $name,
             'registration_datetime' => date('Y-m-d H:i:s'),
-            'password' => $password,
+            'password' => User::getPasswordHash($password),
             'email' => $email,
         ];
         $user = new User($userData);
@@ -74,5 +74,11 @@ class Login extends AbstractController
 
         $this->session->authUser($user->getId());
         $this->redirect('/index.php/blog');
+    }
+
+    public function logout()
+    {
+        $this->session->dropSession();
+        $this->redirect('/index.php');
     }
 }
